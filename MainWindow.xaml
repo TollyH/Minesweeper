@@ -1,0 +1,38 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Minesweeper"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Name="MSWindow" x:Class="Minesweeper.MainWindow"
+        mc:Ignorable="d"
+        Title="Minesweeper" Height="448" Width="350" SizeChanged="MSWindow_SizeChanged" Icon="Resources/mine_icon.ico">
+    <Grid x:Name="GameGrid">
+        <Menu x:Name="MainMenu" Height="20" VerticalAlignment="Top">
+            <MenuItem Header="_Game" Height="20">
+                <MenuItem Header="Reset Game" Click="ResetGame_Click"/>
+                <Separator/>
+                <MenuItem Header="Set Grid Size" Click="SetGridSize_Click"/>
+                <MenuItem Header="Set Number of Mines" Click="SetMineCount_Click"/>
+                <Separator/>
+                <MenuItem Header="Automatically Flag a Mine" Click="AutoFlagMine_Click"/>
+                <MenuItem Header="Automatically Click a Free Square" Click="AutoClearSpace_Click"/>
+                <MenuItem Header="Solve Automatically" Click="AutoSolve_Click"/>
+            </MenuItem>
+            <MenuItem Header="_Window" Height="20">
+                <MenuItem Header="Square Field" Click="SquareField_Click"/>
+            </MenuItem>
+            <MenuItem Header="_About" Height="20" Click="About_Click"/>
+        </Menu>
+        <Grid x:Name="InfoContainer" Margin="5,25,5,0" Background="LightGray" Height="50" VerticalAlignment="Top">
+            <Button x:Name="MiddleButton"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="40" Height="40" Click="ResetGame_Click">
+                <Image Source="mine.png"/>
+            </Button>
+            <Label x:Name="MineDisplay" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" FontSize="22">
+                <System:Int32>10</System:Int32>
+            </Label>
+            <Label x:Name="TimeDisplay" Content="00:00" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" FontWeight="Bold" FontSize="22"/>
+        </Grid>
+        <WrapPanel x:Name="MineField" Margin="5,80,5,5" Background="LightGray" Loaded="MineField_Loaded"/>
+    </Grid>
+</Window>
