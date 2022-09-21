@@ -56,7 +56,7 @@ namespace Minesweeper
         private void GameTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             timeElapsed++;
-            _ = Dispatcher.Invoke(() => TimeDisplay.Content = (timeElapsed / 60).ToString().PadLeft(2, '0') + ":" + (timeElapsed % 60).ToString().PadLeft(2, '0'));
+            _ = Dispatcher.Invoke(() => timeDisplay.Content = (timeElapsed / 60).ToString().PadLeft(2, '0') + ":" + (timeElapsed % 60).ToString().PadLeft(2, '0'));
         }
 
         private void MineField_Loaded(object sender, RoutedEventArgs e)
@@ -66,18 +66,18 @@ namespace Minesweeper
 
         private void PopulateMineField()
         {
-            MineField.Children.Clear();
+            mineField.Children.Clear();
             for (int y = 0; y < ySize; y++)
             {
                 for (int x = 0; x < xSize; x++)
                 {
-                    _ = MineField.Children.Add(new MineButton()
+                    _ = mineField.Children.Add(new MineButton()
                     {
                         Background = Brushes.LightGray,
                         FieldPosition = new Point(x, y)
                     });
-                    ((MineButton)MineField.Children[MineField.Children.Count - 1]).Click += MineButton_Click;
-                    ((MineButton)MineField.Children[MineField.Children.Count - 1]).MouseRightButtonDown += MineButton_MouseRightButtonDown;
+                    ((MineButton)mineField.Children[mineField.Children.Count - 1]).Click += MineButton_Click;
+                    ((MineButton)mineField.Children[mineField.Children.Count - 1]).MouseRightButtonDown += MineButton_MouseRightButtonDown;
                 }
             }
             ResizeMineField();
@@ -86,20 +86,20 @@ namespace Minesweeper
 
         private void ResizeMineField()
         {
-            double TargetHeight = (GameGrid.ActualHeight - (MineField.Margin.Top + MineField.Margin.Bottom)) / ySize;
-            double TargetWidth = (GameGrid.ActualWidth - (MineField.Margin.Right + MineField.Margin.Left)) / xSize;
-            if (TargetHeight < 0)
+            double targetHeight = (gameGrid.ActualHeight - (mineField.Margin.Top + mineField.Margin.Bottom)) / ySize;
+            double targetWidth = (gameGrid.ActualWidth - (mineField.Margin.Right + mineField.Margin.Left)) / xSize;
+            if (targetHeight < 0)
             {
-                TargetHeight = 0;
+                targetHeight = 0;
             }
-            if (TargetWidth < 0)
+            if (targetWidth < 0)
             {
-                TargetWidth = 0;
+                targetWidth = 0;
             }
-            foreach (MineButton buttonInField in MineField.Children)
+            foreach (MineButton buttonInField in mineField.Children)
             {
-                buttonInField.Height = TargetHeight;
-                buttonInField.Width = TargetWidth;
+                buttonInField.Height = targetHeight;
+                buttonInField.Width = targetWidth;
             }
         }
 
@@ -107,10 +107,10 @@ namespace Minesweeper
         {
             gameTimer.Stop();
             timeElapsed = 0;
-            TimeDisplay.Content = "00:00";
-            MineDisplay.Content = mineCount;
-            MineDisplay.Foreground = Brushes.Black;
-            MiddleButton.Content = new Image()
+            timeDisplay.Content = "00:00";
+            mineDisplay.Content = mineCount;
+            mineDisplay.Foreground = Brushes.Black;
+            middleButton.Content = new Image()
             {
                 Source = mineImage
             };
@@ -119,7 +119,7 @@ namespace Minesweeper
 
         private void LayMines()
         {
-            foreach (MineButton buttonInField in MineField.Children)
+            foreach (MineButton buttonInField in mineField.Children)
             {
                 buttonInField.ContainsMine = false;
                 buttonInField.IsPlayerFlagged = false;
@@ -128,7 +128,7 @@ namespace Minesweeper
             }
             for (int i = 0; i < mineCount; i++)
             {
-                MineButton tempButton = (MineButton)MineField.Children[rng.Next(MineField.Children.Count)];
+                MineButton tempButton = (MineButton)mineField.Children[rng.Next(mineField.Children.Count)];
                 if (!tempButton.ContainsMine)
                 {
                     tempButton.ContainsMine = true;
@@ -157,13 +157,13 @@ namespace Minesweeper
 
         private void MineButton_Click(object sender, RoutedEventArgs e)
         {
-            if (MineField.Children.OfType<MineButton>().All(x => x.IsEnabled))
+            if (mineField.Children.OfType<MineButton>().All(x => x.IsEnabled))
             {
                 if (((MineButton)sender).ContainsMine)
                 {
                     while (true)
                     {
-                        MineButton tempButton = (MineButton)MineField.Children[rng.Next(MineField.Children.Count)];
+                        MineButton tempButton = (MineButton)mineField.Children[rng.Next(mineField.Children.Count)];
                         if (!tempButton.ContainsMine)
                         {
                             tempButton.ContainsMine = true;
@@ -190,8 +190,8 @@ namespace Minesweeper
         private void GameLost()
         {
             gameTimer.Stop();
-            MiddleButton.Content = "❌";
-            foreach (MineButton buttonInField in MineField.Children)
+            middleButton.Content = "❌";
+            foreach (MineButton buttonInField in mineField.Children)
             {
                 ComputeButtonContent(buttonInField);
             }
@@ -223,14 +223,14 @@ namespace Minesweeper
                     };
                     return;
                 }
-                int TotalAdjacent = 0;
+                int totalAdjacent = 0;
                 for (int ypos = (int)buttonInField.FieldPosition.Y - 1; ypos <= buttonInField.FieldPosition.Y + 1; ypos++)
                 {
                     for (int xpos = (int)buttonInField.FieldPosition.X - 1; xpos <= buttonInField.FieldPosition.X + 1; xpos++)
                     {
-                        if (xpos < xSize && xpos >= 0 && ypos < ySize && ypos >= 0 && ((MineButton)MineField.Children[(ypos * xSize) + xpos]).ContainsMine)
+                        if (xpos < xSize && xpos >= 0 && ypos < ySize && ypos >= 0 && ((MineButton)mineField.Children[(ypos * xSize) + xpos]).ContainsMine)
                         {
-                            TotalAdjacent++;
+                            totalAdjacent++;
                         }
                     }
                 }
@@ -238,21 +238,21 @@ namespace Minesweeper
                 {
                     Child = new TextBlock()
                     {
-                        Text = TotalAdjacent.ToString(),
+                        Text = totalAdjacent.ToString(),
                         FontWeight = FontWeights.Bold,
-                        Foreground = adjacentColours[TotalAdjacent],
+                        Foreground = adjacentColours[totalAdjacent],
                     }
                 };
-                if (TotalAdjacent == 0)
+                if (totalAdjacent == 0)
                 {
                     for (int ypos = (int)buttonInField.FieldPosition.Y - 1; ypos <= buttonInField.FieldPosition.Y + 1; ypos++)
                     {
                         for (int xpos = (int)buttonInField.FieldPosition.X - 1; xpos <= buttonInField.FieldPosition.X + 1; xpos++)
                         {
-                            if (xpos < xSize && xpos >= 0 && ypos < ySize && ypos >= 0 && ((MineButton)MineField.Children[(ypos * xSize) + xpos]).IsEnabled &&
-                                !((MineButton)MineField.Children[(ypos * xSize) + xpos]).ContainsMine && !((MineButton)MineField.Children[(ypos * xSize) + xpos]).IsPlayerFlagged)
+                            if (xpos < xSize && xpos >= 0 && ypos < ySize && ypos >= 0 && ((MineButton)mineField.Children[(ypos * xSize) + xpos]).IsEnabled &&
+                                !((MineButton)mineField.Children[(ypos * xSize) + xpos]).ContainsMine && !((MineButton)mineField.Children[(ypos * xSize) + xpos]).IsPlayerFlagged)
                             {
-                                ComputeButtonContent((MineButton)MineField.Children[(ypos * xSize) + xpos]);
+                                ComputeButtonContent((MineButton)mineField.Children[(ypos * xSize) + xpos]);
                             }
                         }
                     }
@@ -262,11 +262,11 @@ namespace Minesweeper
 
         private void CheckForVictory()
         {
-            if (MineField.Children.OfType<MineButton>().All(x => !x.ContainsMine ^ x.IsEnabled))
+            if (mineField.Children.OfType<MineButton>().All(x => !x.ContainsMine ^ x.IsEnabled))
             {
                 gameTimer.Stop();
-                MiddleButton.Content = "🏁";
-                foreach (MineButton buttonInField in MineField.Children)
+                middleButton.Content = "🏁";
+                foreach (MineButton buttonInField in mineField.Children)
                 {
                     if (buttonInField.ContainsMine)
                     {
@@ -286,8 +286,8 @@ namespace Minesweeper
 
         private void UpdateMineDisplay()
         {
-            MineDisplay.Content = mineCount - MineField.Children.OfType<MineButton>().Count(x => x.IsPlayerFlagged);
-            MineDisplay.Foreground = (int)MineDisplay.Content < 0 ? Brushes.Red : (Brush)Brushes.Black;
+            mineDisplay.Content = mineCount - mineField.Children.OfType<MineButton>().Count(x => x.IsPlayerFlagged);
+            mineDisplay.Foreground = (int)mineDisplay.Content < 0 ? Brushes.Red : (Brush)Brushes.Black;
         }
 
         private void ResetGame_Click(object sender, RoutedEventArgs e)
@@ -297,12 +297,12 @@ namespace Minesweeper
 
         private void SetGridSize_Click(object sender, RoutedEventArgs e)
         {
-            GridSizeInput NewGridSizeWin = new(xSize, ySize);
-            _ = NewGridSizeWin.ShowDialog();
-            if (NewGridSizeWin.NewX != xSize || NewGridSizeWin.NewY != ySize)
+            GridSizeInput newGridSizeWin = new(xSize, ySize);
+            _ = newGridSizeWin.ShowDialog();
+            if (newGridSizeWin.NewX != xSize || newGridSizeWin.NewY != ySize)
             {
-                xSize = NewGridSizeWin.NewX;
-                ySize = NewGridSizeWin.NewY;
+                xSize = newGridSizeWin.NewX;
+                ySize = newGridSizeWin.NewY;
                 if (mineCount >= xSize * ySize)
                 {
                     mineCount = (xSize * ySize) - 1;
@@ -313,73 +313,73 @@ namespace Minesweeper
 
         private void SetMineCount_Click(object sender, RoutedEventArgs e)
         {
-            MineCountInput NewMineCountWin = new(xSize, ySize, mineCount);
-            _ = NewMineCountWin.ShowDialog();
-            if (NewMineCountWin.NewCount != mineCount)
+            MineCountInput newMineCountWin = new(xSize, ySize, mineCount);
+            _ = newMineCountWin.ShowDialog();
+            if (newMineCountWin.NewCount != mineCount)
             {
-                mineCount = NewMineCountWin.NewCount;
+                mineCount = newMineCountWin.NewCount;
                 NewGame();
             }
         }
 
         private void SquareField_Click(object sender, RoutedEventArgs e)
         {
-            if (((MineButton)MineField.Children[0]).ActualHeight == ((MineButton)MineField.Children[0]).ActualWidth)
+            if (((MineButton)mineField.Children[0]).ActualHeight == ((MineButton)mineField.Children[0]).ActualWidth)
             {
                 return;
             }
-            if (((MineButton)MineField.Children[0]).ActualHeight > ((MineButton)MineField.Children[0]).ActualWidth)
+            if (((MineButton)mineField.Children[0]).ActualHeight > ((MineButton)mineField.Children[0]).ActualWidth)
             {
-                MSWindow.Width += (((MineButton)MineField.Children[0]).ActualHeight - ((MineButton)MineField.Children[0]).ActualWidth) * xSize;
+                Width += (((MineButton)mineField.Children[0]).ActualHeight - ((MineButton)mineField.Children[0]).ActualWidth) * xSize;
             }
-            else if (((MineButton)MineField.Children[0]).ActualWidth > ((MineButton)MineField.Children[0]).ActualHeight)
+            else if (((MineButton)mineField.Children[0]).ActualWidth > ((MineButton)mineField.Children[0]).ActualHeight)
             {
-                MSWindow.Height += (((MineButton)MineField.Children[0]).ActualWidth - ((MineButton)MineField.Children[0]).ActualHeight) * ySize;
+                Height += (((MineButton)mineField.Children[0]).ActualWidth - ((MineButton)mineField.Children[0]).ActualHeight) * ySize;
             }
             ResizeMineField();
         }
 
         private void AutoFlagMine_Click(object sender, RoutedEventArgs e)
         {
-            MineButton RandomButton;
+            MineButton randomButton;
             try
             {
-                RandomButton = MineField.Children.OfType<MineButton>().Where(x => x.ContainsMine && !x.IsPlayerFlagged).ElementAt(
-                rng.Next(MineField.Children.OfType<MineButton>().Count(x => x.ContainsMine && !x.IsPlayerFlagged)));
+                randomButton = mineField.Children.OfType<MineButton>().Where(x => x.ContainsMine && !x.IsPlayerFlagged).ElementAt(
+                rng.Next(mineField.Children.OfType<MineButton>().Count(x => x.ContainsMine && !x.IsPlayerFlagged)));
             }
             catch (ArgumentOutOfRangeException)
             {
                 return;
             }
-            MineButton_MouseRightButtonDown(RandomButton, null);
+            MineButton_MouseRightButtonDown(randomButton, null);
         }
 
         private void AutoClearSpace_Click(object sender, RoutedEventArgs e)
         {
-            MineButton RandomButton;
+            MineButton randomButton;
             try
             {
-                RandomButton = MineField.Children.OfType<MineButton>().Where(x => !x.ContainsMine && !x.IsPlayerFlagged && x.IsEnabled).ElementAt(
-                    rng.Next(MineField.Children.OfType<MineButton>().Count(x => !x.ContainsMine && !x.IsPlayerFlagged && x.IsEnabled)));
+                randomButton = mineField.Children.OfType<MineButton>().Where(x => !x.ContainsMine && !x.IsPlayerFlagged && x.IsEnabled).ElementAt(
+                    rng.Next(mineField.Children.OfType<MineButton>().Count(x => !x.ContainsMine && !x.IsPlayerFlagged && x.IsEnabled)));
             }
             catch (ArgumentOutOfRangeException)
             {
                 return;
             }
-            MineButton_Click(RandomButton, null);
+            MineButton_Click(randomButton, null);
         }
 
         private async void AutoSolve_Click(object sender, RoutedEventArgs e)
         {
-            int Delay = 5000 / (xSize * ySize);
-            if (Delay < 1)
+            int delay = 5000 / (xSize * ySize);
+            if (delay < 1)
             {
-                Delay = 1;
+                delay = 1;
             }
-            foreach (MineButton buttonInField in MineField.Children)
+            foreach (MineButton buttonInField in mineField.Children)
             {
                 buttonInField.BorderBrush = Brushes.Red;
-                await Task.Delay(Delay);
+                await Task.Delay(delay);
                 if (buttonInField.ContainsMine)
                 {
                     MineButton_MouseRightButtonDown(buttonInField, null);
@@ -389,7 +389,7 @@ namespace Minesweeper
                     MineButton_Click(buttonInField, null);
                 }
                 buttonInField.BorderBrush = (Brush)new BrushConverter().ConvertFromString("#FF707070");
-                if (MineField.Children.OfType<MineButton>().All(x => !x.IsEnabled))
+                if (mineField.Children.OfType<MineButton>().All(x => !x.IsEnabled))
                 {
                     return;
                 }

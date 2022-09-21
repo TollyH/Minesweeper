@@ -9,9 +9,9 @@
     <Grid>
         <Label Content="Enter the new grid size" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" FontSize="14"/>
         <Label Content="Width" HorizontalAlignment="Left" Margin="5,39,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <TextBox x:Name="WidthIn" HorizontalAlignment="Left" Height="29" Margin="57,39,0,0" TextWrapping="Wrap" Text="9" VerticalAlignment="Top" Width="98" VerticalContentAlignment="Center" FontSize="14"/>
+        <TextBox x:Name="widthIn" HorizontalAlignment="Left" Height="29" Margin="57,39,0,0" TextWrapping="Wrap" Text="9" VerticalAlignment="Top" Width="98" VerticalContentAlignment="Center" FontSize="14"/>
         <Label Content="Height" HorizontalAlignment="Left" Margin="5,73,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <TextBox x:Name="HeightIn" HorizontalAlignment="Left" Height="29" Margin="57,73,0,0" TextWrapping="Wrap" Text="9" VerticalAlignment="Top" Width="98" VerticalContentAlignment="Center" FontSize="14"/>
+        <TextBox x:Name="heightIn" HorizontalAlignment="Left" Height="29" Margin="57,73,0,0" TextWrapping="Wrap" Text="9" VerticalAlignment="Top" Width="98" VerticalContentAlignment="Center" FontSize="14"/>
         <Button Content="Cancel" HorizontalAlignment="Right" Margin="0,0,5,5" VerticalAlignment="Bottom" Width="75" Click="CancelButton_Click"/>
         <Button Content="OK" HorizontalAlignment="Right" Margin="0,0,85,5" VerticalAlignment="Bottom" Width="75" Click="OkButton_Click"/>
     </Grid>

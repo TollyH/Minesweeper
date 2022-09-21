@@ -4,11 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Minesweeper"
-        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Name="MSWindow" x:Class="Minesweeper.MainWindow"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="Minesweeper.MainWindow"
         mc:Ignorable="d"
         Title="Minesweeper" Height="448" Width="350" SizeChanged="MSWindow_SizeChanged" Icon="Resources/mine_icon.ico">
-    <Grid x:Name="GameGrid">
-        <Menu x:Name="MainMenu" Height="20" VerticalAlignment="Top">
+    <Grid x:Name="gameGrid">
+        <Menu x:Name="mainMenu" Height="20" VerticalAlignment="Top">
             <MenuItem Header="_Game" Height="20">
                 <MenuItem Header="Reset Game" Click="ResetGame_Click"/>
                 <Separator/>
@@ -24,15 +24,15 @@
             </MenuItem>
             <MenuItem Header="_About" Height="20" Click="About_Click"/>
         </Menu>
-        <Grid x:Name="InfoContainer" Margin="5,25,5,0" Background="LightGray" Height="50" VerticalAlignment="Top">
-            <Button x:Name="MiddleButton"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="40" Height="40" Click="ResetGame_Click">
+        <Grid x:Name="infoContainer" Margin="5,25,5,0" Background="LightGray" Height="50" VerticalAlignment="Top">
+            <Button x:Name="middleButton"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="40" Height="40" Click="ResetGame_Click">
                 <Image Source="mine.png"/>
             </Button>
-            <Label x:Name="MineDisplay" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" FontSize="22">
+            <Label x:Name="mineDisplay" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" FontSize="22">
                 <System:Int32>10</System:Int32>
             </Label>
-            <Label x:Name="TimeDisplay" Content="00:00" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" FontWeight="Bold" FontSize="22"/>
+            <Label x:Name="timeDisplay" Content="00:00" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" FontWeight="Bold" FontSize="22"/>
         </Grid>
-        <WrapPanel x:Name="MineField" Margin="5,80,5,5" Background="LightGray" Loaded="MineField_Loaded"/>
+        <WrapPanel x:Name="mineField" Margin="5,80,5,5" Background="LightGray" Loaded="MineField_Loaded"/>
     </Grid>
 </Window>

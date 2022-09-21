@@ -8,7 +8,7 @@
         Title="Mine Count" Height="135" Width="362" WindowStyle="ToolWindow">
     <Grid>
         <Label Content="Enter the new mine count" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <TextBox x:Name="CountIn" HorizontalAlignment="Left" Height="29" Margin="10,39,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="164" VerticalContentAlignment="Center" FontSize="14"/>
+        <TextBox x:Name="countIn" HorizontalAlignment="Left" Height="29" Margin="10,39,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="164" VerticalContentAlignment="Center" FontSize="14"/>
         <Button Content="Cancel" HorizontalAlignment="Right" Margin="0,0,5,5" VerticalAlignment="Bottom" Width="75" Click="CancelButton_Click"/>
         <Button Content="OK" HorizontalAlignment="Right" Margin="0,0,85,5" VerticalAlignment="Bottom" Width="75" Click="OkButton_Click"/>
     </Grid>

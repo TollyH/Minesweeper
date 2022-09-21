@@ -18,13 +18,13 @@ namespace Minesweeper
             InitializeComponent();
             initX = xSize;
             initY = ySize;
-            WidthIn.Text = xSize.ToString();
-            HeightIn.Text = ySize.ToString();
+            widthIn.Text = xSize.ToString();
+            heightIn.Text = ySize.ToString();
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(WidthIn.Text, out NewX) && int.TryParse(HeightIn.Text, out NewY))
+            if (int.TryParse(widthIn.Text, out NewX) && int.TryParse(heightIn.Text, out NewY))
             {
                 if (NewX < 1 || NewY < 1)
                 {

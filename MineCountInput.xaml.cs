@@ -19,12 +19,12 @@ namespace Minesweeper
             initX = xSize;
             initY = ySize;
             initCount = mineCount;
-            CountIn.Text = mineCount.ToString();
+            countIn.Text = mineCount.ToString();
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(CountIn.Text, out NewCount))
+            if (int.TryParse(countIn.Text, out NewCount))
             {
                 if (NewCount >= initX * initY || NewCount < 0)
                 {
