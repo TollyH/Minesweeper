@@ -7,19 +7,19 @@ namespace Minesweeper
     /// </summary>
     public partial class GridSizeInput : Window
     {
-        private readonly int InitX;
-        private readonly int InitY;
+        private readonly int initX;
+        private readonly int initY;
 
         public int NewX;
         public int NewY;
 
-        public GridSizeInput(int XSize, int YSize)
+        public GridSizeInput(int xSize, int ySize)
         {
             InitializeComponent();
-            InitX = XSize;
-            InitY = YSize;
-            WidthIn.Text = XSize.ToString();
-            HeightIn.Text = YSize.ToString();
+            initX = xSize;
+            initY = ySize;
+            WidthIn.Text = xSize.ToString();
+            HeightIn.Text = ySize.ToString();
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
@@ -28,21 +28,21 @@ namespace Minesweeper
             {
                 if (NewX < 1 || NewY < 1)
                 {
-                    MessageBox.Show("Invalid size provided", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    _ = MessageBox.Show("Invalid size provided", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 Close();
             }
             else
             {
-                MessageBox.Show("Invalid size provided", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show("Invalid size provided", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            NewX = InitX;
-            NewY = InitY;
+            NewX = initX;
+            NewY = initY;
             Close();
         }
     }

@@ -7,42 +7,42 @@ namespace Minesweeper
     /// </summary>
     public partial class MineCountInput : Window
     {
-        private readonly int InitX;
-        private readonly int InitY;
-        private readonly int InitCount;
+        private readonly int initX;
+        private readonly int initY;
+        private readonly int initCount;
 
         public int NewCount;
 
-        public MineCountInput(int XSize, int YSize, int MineCount)
+        public MineCountInput(int xSize, int ySize, int mineCount)
         {
             InitializeComponent();
-            InitX = XSize;
-            InitY = YSize;
-            InitCount = MineCount;
-            CountIn.Text = MineCount.ToString();
+            initX = xSize;
+            initY = ySize;
+            initCount = mineCount;
+            CountIn.Text = mineCount.ToString();
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
             if (int.TryParse(CountIn.Text, out NewCount))
             {
-                if (NewCount >= InitX * InitY || NewCount < 0)
+                if (NewCount >= initX * initY || NewCount < 0)
                 {
-                    MessageBox.Show("Invalid mine count provided", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    NewCount = InitCount;
+                    _ = MessageBox.Show("Invalid mine count provided", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    NewCount = initCount;
                     return;
                 }
                 Close();
             }
             else
             {
-                MessageBox.Show("Invalid mine count provided", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show("Invalid mine count provided", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            NewCount = InitCount;
+            NewCount = initCount;
             Close();
         }
     }
