@@ -77,7 +77,7 @@ namespace Minesweeper
                         FieldPosition = new Point(x, y)
                     });
                     ((MineButton)mineField.Children[mineField.Children.Count - 1]).Click += MineButton_Click;
-                    ((MineButton)mineField.Children[mineField.Children.Count - 1]).MouseRightButtonDown += MineButton_MouseRightButtonDown;
+                    ((MineButton)mineField.Children[mineField.Children.Count - 1]).MouseRightButtonUp += MineButton_MouseRightButtonUp;
                 }
             }
             ResizeMineField();
@@ -140,7 +140,7 @@ namespace Minesweeper
             }
         }
 
-        private void MineButton_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        private void MineButton_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             ((MineButton)sender).IsPlayerFlagged = !((MineButton)sender).IsPlayerFlagged;
             ((MineButton)sender).Content = ((MineButton)sender).IsPlayerFlagged
@@ -351,7 +351,7 @@ namespace Minesweeper
             {
                 return;
             }
-            MineButton_MouseRightButtonDown(randomButton, null);
+            MineButton_MouseRightButtonUp(randomButton, null);
         }
 
         private void AutoClearSpace_Click(object sender, RoutedEventArgs e)
@@ -382,7 +382,7 @@ namespace Minesweeper
                 await Task.Delay(delay);
                 if (buttonInField.ContainsMine)
                 {
-                    MineButton_MouseRightButtonDown(buttonInField, null);
+                    MineButton_MouseRightButtonUp(buttonInField, null);
                 }
                 else
                 {
