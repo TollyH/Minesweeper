@@ -153,7 +153,10 @@ namespace Minesweeper
                 }
                 : null;
             UpdateMineDisplay();
+            if (e is not null)
+            {
             e.Handled = true;
+        }
         }
 
         private void MineButton_Click(object sender, RoutedEventArgs e)
