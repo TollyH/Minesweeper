@@ -153,6 +153,7 @@ namespace Minesweeper
                 }
                 : null;
             UpdateMineDisplay();
+            e.Handled = true;
         }
 
         private void MineButton_Click(object sender, RoutedEventArgs e)
@@ -185,6 +186,62 @@ namespace Minesweeper
                 return;
             }
             CheckForVictory();
+            if (e is not null)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void MineField_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            // If both mouse buttons were pressed together for chording
+            if ((e.ChangedButton == MouseButton.Left && e.RightButton == MouseButtonState.Pressed)
+                || (e.ChangedButton == MouseButton.Right && e.LeftButton == MouseButtonState.Pressed))
+            {
+                Point relativePos = e.GetPosition(mineField);
+                int clickedGridX = (int)relativePos.X / (int)(mineField.ActualWidth / xSize);
+                int clickedGridY = (int)relativePos.Y / (int)(mineField.ActualHeight / ySize);
+                if (!mineField.Children[(clickedGridY * xSize) + clickedGridX].IsEnabled)
+                {
+                    int totalAdjacentFlags = 0;
+                    int totalAdjacentMines = 0;
+                    for (int ypos = clickedGridY - 1; ypos <= clickedGridY + 1; ypos++)
+                    {
+                        for (int xpos = clickedGridX - 1; xpos <= clickedGridX + 1; xpos++)
+                        {
+                            if (xpos < xSize && xpos >= 0 && ypos < ySize && ypos >= 0)
+                            {
+                                MineButton toCheck = (MineButton)mineField.Children[(ypos * xSize) + xpos];
+                                if (toCheck.IsPlayerFlagged)
+                                {
+                                    totalAdjacentFlags++;
+                                }
+                                if (toCheck.ContainsMine)
+                                {
+                                    totalAdjacentMines++;
+                                }
+                            }
+                        }
+                    }
+                    if (totalAdjacentFlags == totalAdjacentMines)
+                    {
+                        for (int ypos = clickedGridY - 1; ypos <= clickedGridY + 1; ypos++)
+                        {
+                            for (int xpos = clickedGridX - 1; xpos <= clickedGridX + 1; xpos++)
+                            {
+                                if (xpos < xSize && xpos >= 0 && ypos < ySize && ypos >= 0)
+                                {
+                                    MineButton toClick = (MineButton)mineField.Children[(ypos * xSize) + xpos];
+                                    if (toClick.IsEnabled && !toClick.IsPlayerFlagged)
+                                    {
+                                        MineButton_Click(toClick, null);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void GameLost()
