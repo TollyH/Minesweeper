@@ -155,8 +155,8 @@ namespace Minesweeper
             UpdateMineDisplay();
             if (e is not null)
             {
-            e.Handled = true;
-        }
+                e.Handled = true;
+            }
         }
 
         private void MineButton_Click(object sender, RoutedEventArgs e)
@@ -443,19 +443,22 @@ namespace Minesweeper
             foreach (MineButton buttonInField in mineField.Children)
             {
                 buttonInField.BorderBrush = Brushes.Red;
-                await Task.Delay(delay);
-                if (buttonInField.ContainsMine)
+                if (buttonInField.IsEnabled)
                 {
-                    MineButton_MouseRightButtonUp(buttonInField, null);
-                }
-                else
-                {
-                    MineButton_Click(buttonInField, null);
-                }
-                buttonInField.BorderBrush = (Brush)new BrushConverter().ConvertFromString("#FF707070");
-                if (mineField.Children.OfType<MineButton>().All(x => !x.IsEnabled))
-                {
-                    return;
+                    await Task.Delay(delay);
+                    if (buttonInField.ContainsMine)
+                    {
+                        MineButton_MouseRightButtonUp(buttonInField, null);
+                    }
+                    else
+                    {
+                        MineButton_Click(buttonInField, null);
+                    }
+                    buttonInField.BorderBrush = (Brush)new BrushConverter().ConvertFromString("#FF707070");
+                    if (mineField.Children.OfType<MineButton>().All(x => !x.IsEnabled))
+                    {
+                        return;
+                    }
                 }
             }
         }
