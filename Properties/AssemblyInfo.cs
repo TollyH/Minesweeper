@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Tolly Hill")]
 [assembly: AssemblyProduct("Minesweeper")]
-[assembly: AssemblyCopyright("Copyright © 2021  Ptolemy Hill")]
+[assembly: AssemblyCopyright("Copyright © 2021-2022  Ptolemy Hill")]
 [assembly: AssemblyTrademark("Tolly Hill")]
 [assembly: AssemblyCulture("")]
 
