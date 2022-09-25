@@ -71,13 +71,16 @@ namespace Minesweeper
             {
                 for (int x = 0; x < xSize; x++)
                 {
-                    _ = mineField.Children.Add(new MineButton()
+                    MineButton newButton = new()
                     {
                         Background = Brushes.LightGray,
                         FieldPosition = new Point(x, y)
-                    });
-                    ((MineButton)mineField.Children[mineField.Children.Count - 1]).Click += MineButton_Click;
-                    ((MineButton)mineField.Children[mineField.Children.Count - 1]).MouseRightButtonUp += MineButton_MouseRightButtonUp;
+                    };
+                    newButton.Click += MineButton_Click;
+                    newButton.MouseRightButtonUp += MineButton_MouseRightButtonUp;
+                    _ = mineField.Children.Add(newButton);
+                    Canvas.SetTop(newButton, y * (mineField.ActualHeight / ySize));
+                    Canvas.SetLeft(newButton, x * (mineField.ActualWidth / xSize));
                 }
             }
             ResizeMineField();
@@ -100,6 +103,8 @@ namespace Minesweeper
             {
                 buttonInField.Height = targetHeight;
                 buttonInField.Width = targetWidth;
+                Canvas.SetTop(buttonInField, buttonInField.FieldPosition.Y * (mineField.ActualHeight / ySize));
+                Canvas.SetLeft(buttonInField, buttonInField.FieldPosition.X * (mineField.ActualWidth / xSize));
             }
         }
 
@@ -442,9 +447,9 @@ namespace Minesweeper
             }
             foreach (MineButton buttonInField in mineField.Children)
             {
-                buttonInField.BorderBrush = Brushes.Red;
                 if (buttonInField.IsEnabled)
                 {
+                    buttonInField.BorderBrush = Brushes.Red;
                     await Task.Delay(delay);
                     if (buttonInField.ContainsMine)
                     {

@@ -33,6 +33,6 @@
             </Label>
             <Label x:Name="timeDisplay" Content="00:00" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" FontWeight="Bold" FontSize="22"/>
         </Grid>
-        <WrapPanel x:Name="mineField" Margin="5,80,5,5" Background="LightGray" Loaded="MineField_Loaded" MouseUp="MineField_MouseUp"/>
+        <Canvas x:Name="mineField" Margin="5,80,5,5" Background="LightGray" Loaded="MineField_Loaded" MouseUp="MineField_MouseUp"/>
     </Grid>
 </Window>
