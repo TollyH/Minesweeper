@@ -201,6 +201,10 @@ namespace Minesweeper
                 Point relativePos = e.GetPosition(mineField);
                 int clickedGridX = (int)relativePos.X / (int)(mineField.ActualWidth / xSize);
                 int clickedGridY = (int)relativePos.Y / (int)(mineField.ActualHeight / ySize);
+                if (!(clickedGridX < xSize && clickedGridX >= 0 && clickedGridY < ySize && clickedGridY >= 0))
+                {
+                    return;
+                }
                 if (!mineField.Children[(clickedGridY * xSize) + clickedGridX].IsEnabled)
                 {
                     int totalAdjacentFlags = 0;
